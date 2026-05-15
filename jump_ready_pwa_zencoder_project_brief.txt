@@ -1,0 +1,1556 @@
+JUMP READY PWA — PROJECT DESCRIPTION + TODO LIST
+For: Century High School Volleyball + Tualatin Valley Volleyball Club
+Build tool: ZenCoder in VS Code
+Project type: Simple no-login Progressive Web App (PWA)
+Primary user: Volleyball athletes in the gym
+MVP constraint: QR code → readiness check → suggested track → session cards → exercise videos
+
+
+============================================================
+1. PROJECT OVERVIEW
+============================================================
+
+Build a mobile-first Progressive Web App called "Jump Ready."
+
+Jump Ready is a simple no-login gym tool for volleyball athletes. Athletes scan a QR code at the gym, open the app on their phone, complete a quick readiness check, receive a suggested training track, and then follow a 60-minute volleyball strength/movement session using session cards and exercise demo videos.
+
+The program is based on three training layers:
+
+1. Structural Capacity
+   - Can the athlete absorb, hold, and tolerate force?
+   - Focus: strength, range, tissue capacity, landing control, joint tolerance.
+
+2. Neuromuscular Coordination
+   - Can the athlete organize strength into adaptable movement?
+   - Focus: balance, rhythm, coordination, crawling, reaching, deceleration, reactive movement.
+
+3. Force Expression Under Speed
+   - Can the athlete express force quickly and repeat it?
+   - Focus: jumping, sprinting, bounding, pogos, elastic/reactive actions.
+
+The app should support athlete autonomy. The app may suggest a track, but athletes can override the suggestion.
+
+The three training tracks are:
+
+A. Build
+   - For newer, sore, inconsistent, or lower-readiness athletes.
+   - More controlled strength, isometrics, lower impact, longer rest.
+   - Main idea: Own the position before you speed it up.
+
+B. Organize
+   - For athletes who need coordination, rhythm, balance, and movement quality.
+   - More crawling, reaching, balance, deceleration, partner/reactive movement.
+   - Main idea: Solve movement problems, not just complete reps.
+
+C. Express
+   - For fresh, experienced athletes ready for power and speed.
+   - More explosive jumps, sprints, bounds, and low-volume high-intent work.
+   - Main idea: Fast, crisp, explosive — stop before quality drops.
+
+
+============================================================
+2. MVP GOALS
+============================================================
+
+The MVP should do only these things well:
+
+1. Open from a QR code on any phone.
+2. Work well on mobile screens.
+3. Let athletes complete a readiness check.
+4. Suggest Build, Organize, or Express based on readiness answers.
+5. Allow athletes to override the suggested track.
+6. Show a complete 60-minute training session.
+7. Show the correct exercise variation for the chosen track.
+8. Include video placeholders or embedded demo videos for each exercise.
+9. Include an exercise library organized by movement family.
+10. Include safety rules and simple coaching cues.
+11. Be installable as a PWA.
+12. Work without user accounts.
+13. Require no database for the MVP.
+
+Do NOT build these in MVP:
+- Login
+- Athlete accounts
+- Coach dashboard
+- Attendance tracking
+- Analytics
+- Saved history
+- Payments
+- Team assignments
+- Complex admin tools
+
+
+============================================================
+3. RECOMMENDED TECH DIRECTION
+============================================================
+
+Use a simple frontend-only PWA.
+
+Suggested stack:
+- Vite
+- React
+- TypeScript
+- Tailwind CSS
+- Local static data files
+- PWA support with vite-plugin-pwa or equivalent
+
+The app should be deployable to:
+- Vercel
+- Netlify
+- GitHub Pages
+
+Data can live in local TypeScript or JSON files for MVP:
+- exercises.ts
+- sessionTemplate.ts
+- readinessLogic.ts
+
+Videos can initially be:
+- YouTube links
+- Google Drive links
+- Local placeholder URLs
+- Later replaced with hosted mp4 files or YouTube unlisted videos
+
+Design should be clean, modern, mobile-first, and gym-friendly:
+- Large buttons
+- High contrast
+- Quick scanning
+- Minimal typing
+- Cards instead of dense pages
+- Clear track colors or labels
+- Easy one-handed phone use
+
+
+============================================================
+4. CORE APP FLOW
+============================================================
+
+FLOW:
+Landing Page
+  → Start Today's Session
+  → Readiness Check
+  → Suggested Track
+  → Athlete confirms or changes track
+  → Session Overview
+  → Session Cards
+  → Exercise Demo Modal / Video Page
+  → Reset + Reflection
+
+
+============================================================
+5. APP PAGES / SCREENS
+============================================================
+
+PAGE 1: Landing Page
+Purpose:
+- Give athletes a simple starting point.
+
+Content:
+- App title: Jump Ready
+- Subtitle: Volleyball strength and movement for athletes who jump, land, sprint, and adapt.
+- Primary button: Start Today's Session
+- Secondary buttons:
+  - Exercise Library
+  - Safety Rules
+  - About the Program
+
+Design:
+- Mobile-first
+- Simple hero section
+- Large button spacing
+- Century/TVVC-friendly visual style
+- No login prompt
+
+
+PAGE 2: Readiness Check
+Purpose:
+- Help athletes choose an appropriate track for the day.
+
+Questions:
+
+1. How sore are you today?
+Options:
+- None
+- Mild
+- Moderate
+- High
+
+2. Any pain today?
+Options:
+- No
+- Yes
+
+3. Energy level?
+Options:
+- Low
+- Okay
+- High
+
+4. How many Jump Ready sessions have you done this week?
+Options:
+- 0
+- 1
+- 2+
+
+5. Did you train, play, or compete hard yesterday?
+Options:
+- No
+- Yes
+
+Optional later:
+6. Landing quality today?
+Options:
+- Quiet and controlled
+- A little heavy
+- Loud or unstable
+
+Readiness logic:
+- If pain = yes → suggest Build
+- If soreness = high → suggest Build
+- If energy = low → suggest Build or Organize
+- If sessions this week = 2+ → suggest Build or Organize
+- If trained yesterday = yes → suggest Build or Organize
+- If soreness = none/mild, pain = no, energy = high, trained yesterday = no → suggest Express
+- Default middle option → Organize
+
+The app should show:
+- Suggested track
+- Short explanation
+- Buttons to choose:
+  - Use Suggested Track
+  - Choose Build
+  - Choose Organize
+  - Choose Express
+
+Example explanation:
+"Suggested track: Organize. You are good to train, but today is probably better for rhythm, balance, and clean movement than chasing max power."
+
+
+PAGE 3: Track Selection / Confirmation
+Purpose:
+- Let athletes understand what their selected track means.
+
+For Build:
+- "Build: Strength, control, range, lower impact. Own the positions."
+- Best for sore, newer, stiff, or lower-readiness athletes.
+
+For Organize:
+- "Organize: Coordination, rhythm, balance, and adaptable movement."
+- Best for athletes who feel okay but not fully explosive.
+
+For Express:
+- "Express: Fast, crisp, explosive actions with low volume and high intent."
+- Best for fresh athletes with clean landings and no pain.
+
+Button:
+- Start Session
+
+
+PAGE 4: Session Overview
+Purpose:
+- Show the athlete the 60-minute structure.
+
+Sections:
+1. Warm-Up: Explore + Prepare — 0:00–0:08
+2. Structural Capacity: Build the Frame — 0:08–0:25
+3. Neuromuscular Coordination: Organize the Athlete — 0:25–0:42
+4. Force Expression: Express Power — 0:42–0:55
+5. Reset + Reflect — 0:55–1:00
+
+Button:
+- Begin Session
+
+
+PAGE 5: Session Cards
+Purpose:
+- Main workout interface.
+
+Each card should include:
+- Section name
+- Time block
+- Movement family
+- Exercise name for selected track
+- Sets/reps/time
+- Rest guidance
+- Coaching cue
+- Easier option
+- Harder option
+- Watch Demo button
+- Mark Complete button
+
+Recommended UI:
+- Cards stacked vertically
+- Section headers
+- Sticky top bar with selected track
+- Optional progress indicator
+- "Change Track" button available but not dominant
+
+Important:
+- If athlete chooses Build, all session cards show Build variations.
+- If athlete chooses Organize, all session cards show Organize variations.
+- If athlete chooses Express, all session cards show Express variations.
+
+
+PAGE 6: Exercise Demo Modal / Video Detail
+Purpose:
+- Let athlete quickly watch the exercise.
+
+Content:
+- Exercise name
+- Video embed or placeholder
+- Track label
+- Movement family
+- 1–2 sentence description
+- Sets/reps/time
+- Key cue
+- Easier version
+- Harder version
+- Safety note if needed
+
+MVP video handling:
+- Use placeholder videos or placeholder thumbnail/card for now.
+- Each exercise should have a videoUrl field ready.
+- If no video exists, show "Demo coming soon" and written instructions.
+
+
+PAGE 7: Exercise Library
+Purpose:
+- Let athletes browse all movement families and track variations.
+
+Organize by movement family:
+1. Warm-Up / Movement Prep
+2. Knee / Quad / Split Squat
+3. Calf / Achilles / Ankle
+4. Hamstring / Hip / Posterior Chain
+5. Trunk / Brace / Rotate
+6. Landing / Deceleration
+7. Lateral Movement
+8. Ground-Based Movement
+9. Shoulder / Scap / Upper Body
+10. Power Circuit
+11. Reset / Mobility
+
+Library card should show:
+- Movement family
+- Exercise name
+- Track label
+- Watch Demo
+- Cue
+
+Filters:
+- All
+- Build
+- Organize
+- Express
+- Warm-Up
+- Reset
+
+
+PAGE 8: Safety Rules
+Purpose:
+- Simple safety guardrails.
+
+Content:
+
+Pain Rule:
+- 0–2/10 pain: okay, monitor.
+- 3–4/10 pain: regress or change exercise.
+- 5+/10 pain: stop that movement.
+
+Landing Rule:
+- If landings are loud, collapsing, or unstable:
+  - reduce jump height
+  - reduce reps
+  - switch to Build or Organize
+
+Soreness Rule:
+- If sore:
+  - no max jumping
+  - more isometrics
+  - more range/control
+  - more crawling and mobility
+
+Effort Rule:
+- Build: 6–8/10 effort
+- Organize: 6–7/10 effort
+- Express: 9–10/10 intent, low volume
+
+Core message:
+"Your job is not to survive the workout. Your job is to choose the right challenge."
+
+
+PAGE 9: About the Program
+Purpose:
+- Explain the program simply.
+
+Content:
+"Jump Ready helps volleyball athletes build the frame, organize the system, and express power. The goal is not perfect technique or grinding through soreness. The goal is to become more durable, explosive, coordinated, and adaptable for the actual demands of volleyball."
+
+
+============================================================
+6. DATA MODEL
+============================================================
+
+Use local TypeScript types.
+
+TYPE: Track
+Values:
+- build
+- organize
+- express
+
+TYPE: Exercise
+Fields:
+- id: string
+- name: string
+- family: string
+- section: string
+- track: Track | "all"
+- timeBlock?: string
+- setsReps: string
+- rest?: string
+- description: string
+- cue: string
+- easier: string
+- harder: string
+- safetyNote?: string
+- videoUrl?: string
+- thumbnailUrl?: string
+- tags?: string[]
+
+TYPE: MovementFamily
+Fields:
+- id: string
+- name: string
+- description: string
+- section: string
+
+TYPE: SessionSection
+Fields:
+- id: string
+- name: string
+- timeBlock: string
+- purpose: string
+- familyIds: string[]
+
+TYPE: ReadinessAnswers
+Fields:
+- soreness: "none" | "mild" | "moderate" | "high"
+- pain: "yes" | "no"
+- energy: "low" | "okay" | "high"
+- sessionsThisWeek: "0" | "1" | "2+"
+- trainedYesterday: "yes" | "no"
+
+TYPE: TrackRecommendation
+Fields:
+- track: Track
+- reason: string
+
+
+============================================================
+7. EXERCISE DATABASE — STARTER CONTENT
+============================================================
+
+Create these movement families and exercises.
+
+WARM-UP / MOVEMENT PREP
+These are track = all.
+
+1. Bear Crawl Forward/Backward
+- Sets/reps: 2 x 20 seconds
+- Cue: Move quietly and keep the floor close.
+- Easier: Hold bear crawl position.
+- Harder: Add direction changes.
+
+2. Deep Squat Rocks
+- Sets/reps: 1–2 x 30 seconds
+- Cue: Find range without forcing it.
+- Easier: Hold onto support.
+- Harder: Add reach or rotation.
+
+3. Lateral Lunge Flow
+- Sets/reps: 1–2 x 5 each side
+- Cue: Shift smoothly from side to side.
+- Easier: Reduce depth.
+- Harder: Add reach.
+
+4. Pogos
+- Sets/reps: 2 x 15 seconds
+- Cue: Bounce quietly and quickly.
+- Easier: Two-foot ankle rocks.
+- Harder: Faster contacts.
+
+5. Scap Push-Ups
+- Sets/reps: 2 x 8
+- Cue: Push the floor away.
+- Easier: Hands elevated.
+- Harder: Slower tempo.
+
+
+STRUCTURAL CAPACITY: KNEE / QUAD / SPLIT SQUAT
+
+Build:
+Split Squat Iso Hold
+- Sets/reps: 3 x 20–30 seconds each leg
+- Rest: 30–45 seconds
+- Description: Hold a split squat position with control.
+- Cue: Stay tall and own the position.
+- Easier: Reduce depth or use hand support.
+- Harder: Go deeper or hold longer.
+
+Organize:
+ATG Split Squat with Reach
+- Sets/reps: 3 x 5 each leg
+- Rest: 30–45 seconds
+- Description: Move through a comfortable split squat range while reaching in different directions.
+- Cue: Reach long and stay balanced.
+- Easier: Shorter range.
+- Harder: Add more reach directions.
+
+Express:
+Split Squat Switch Jump
+- Sets/reps: 3 x 4–6 each leg
+- Rest: 45–60 seconds
+- Description: Quick split squat jumps with controlled landings.
+- Cue: Switch fast, land quiet.
+- Easier: Step-switch without jumping.
+- Harder: Jump higher while staying crisp.
+
+
+STRUCTURAL CAPACITY: CALF / ACHILLES / ANKLE
+
+Build:
+Standing Calf Raise Iso Hold
+- Sets/reps: 3 x 20–30 seconds
+- Rest: 30 seconds
+- Cue: Push through the big toe and stay tall.
+- Easier: Two legs.
+- Harder: Single leg.
+
+Organize:
+Single-Leg Calf Raise with Balance Reach
+- Sets/reps: 3 x 6 each side
+- Rest: 30–45 seconds
+- Cue: Reach without losing the foot tripod.
+- Easier: Use wall support.
+- Harder: Reach farther or in multiple directions.
+
+Express:
+Pogo Jumps
+- Sets/reps: 3 x 15–25 seconds
+- Rest: 45–60 seconds
+- Cue: Quick off the floor, quiet on the floor.
+- Easier: Smaller bounces.
+- Harder: Higher/faster pogos.
+
+
+STRUCTURAL CAPACITY: HAMSTRING / HIP / POSTERIOR CHAIN
+
+Build:
+Glute Bridge Hold
+- Sets/reps: 3 x 20–30 seconds
+- Rest: 30 seconds
+- Cue: Push the floor away and keep ribs down.
+- Easier: Two-leg bridge.
+- Harder: Single-leg bridge.
+
+Organize:
+Single-Leg RDL Reach
+- Sets/reps: 3 x 5 each side
+- Rest: 30–45 seconds
+- Cue: Reach long and keep balance.
+- Easier: Tap the back foot down.
+- Harder: Reach to multiple targets.
+
+Express:
+Broad Jump to Stick
+- Sets/reps: 3 x 3
+- Rest: 45–60 seconds
+- Cue: Jump far, land quiet, freeze.
+- Easier: Smaller jump.
+- Harder: Add a second jump after the stick.
+
+
+STRUCTURAL CAPACITY: TRUNK / BRACE / ROTATE
+
+Build:
+Dead Bug
+- Sets/reps: 3 x 6 each side
+- Rest: 30 seconds
+- Cue: Move slow without letting your back arch.
+- Easier: Move arms only or legs only.
+- Harder: Longer reach.
+
+Organize:
+Bear Crawl Shoulder Tap
+- Sets/reps: 3 x 8–12 taps
+- Rest: 30–45 seconds
+- Cue: Tap without rocking.
+- Easier: Wider feet.
+- Harder: Narrower feet or slower taps.
+
+Express:
+Plank to Sprint Start
+- Sets/reps: 3 x 3–5 reps
+- Rest: 45–60 seconds
+- Cue: Pop up and win the first step.
+- Easier: Step up instead of pop up.
+- Harder: Add coach clap start.
+
+
+COORDINATION: LANDING / DECELERATION
+
+Build:
+Snap-Down to Stick
+- Sets/reps: 3 x 4
+- Rest: 30–45 seconds
+- Cue: Land like the floor is ice.
+- Easier: Smaller snap-down.
+- Harder: Add arm swing.
+
+Organize:
+Jump-Land-Turn
+- Sets/reps: 3 x 4
+- Rest: 45 seconds
+- Cue: Find the floor, then find the next direction.
+- Easier: Turn after landing.
+- Harder: Coach calls direction while athlete is in the air.
+
+Express:
+Lateral Bound to Stick
+- Sets/reps: 3 x 4 each side
+- Rest: 45–60 seconds
+- Cue: Push hard, land clean.
+- Easier: Smaller bound.
+- Harder: Bound farther or react to a call.
+
+
+COORDINATION: LATERAL MOVEMENT
+
+Build:
+Low Lateral Step + Pause
+- Sets/reps: 3 x 5 each way
+- Rest: 30 seconds
+- Cue: Stay low and balanced.
+- Easier: Smaller step.
+- Harder: Longer pause or deeper position.
+
+Organize:
+Partner Mirror Shuffle
+- Sets/reps: 3 x 20–30 seconds
+- Rest: 45 seconds
+- Cue: Read the partner, not your feet.
+- Easier: Slow leader.
+- Harder: Faster direction changes.
+
+Express:
+Shuffle → Sprint → Stick
+- Sets/reps: 4–6 reps
+- Rest: 45–60 seconds
+- Cue: Change gears fast, then stop clean.
+- Easier: Shorter distance.
+- Harder: Add reactive direction call.
+
+
+COORDINATION: GROUND-BASED MOVEMENT
+
+Build:
+Bear Crawl Hold
+- Sets/reps: 3 x 20 seconds
+- Rest: 30 seconds
+- Cue: Knees hover, back quiet.
+- Easier: Knees down.
+- Harder: Longer hold.
+
+Organize:
+Bear Crawl Direction Changes
+- Sets/reps: 3 x 20–30 seconds
+- Rest: 45 seconds
+- Cue: Move forward, back, and sideways without rushing.
+- Easier: Fewer direction changes.
+- Harder: Coach-called direction changes.
+
+Express:
+Crawl → Pop-Up → Sprint
+- Sets/reps: 3–5 reps
+- Rest: 45–60 seconds
+- Cue: Smooth transition, fast first step.
+- Easier: Crawl to stand.
+- Harder: React to coach clap.
+
+
+COORDINATION: SHOULDER / SCAP / UPPER BODY
+
+Build:
+Push-Up Hold
+- Sets/reps: 3 x 20 seconds
+- Rest: 30 seconds
+- Cue: Push the floor away.
+- Easier: Hands elevated.
+- Harder: Lower hold.
+
+Organize:
+Scap Push-Up + Reach
+- Sets/reps: 3 x 6–8
+- Rest: 30–45 seconds
+- Cue: Reach without collapsing.
+- Easier: Hands elevated.
+- Harder: Add alternating reaches.
+
+Express:
+Explosive Incline Push-Up
+- Sets/reps: 3 x 4–6
+- Rest: 45–60 seconds
+- Cue: Fast hands, solid body.
+- Easier: Higher incline.
+- Harder: Lower incline.
+
+
+FORCE EXPRESSION: POWER CIRCUIT
+
+Build:
+Power Circuit — Build
+- Sets/reps: 3 rounds
+- Content:
+  - 3 approach footwork patterns, no jump
+  - 3 snap-down landings
+  - 10-second calf iso
+  - Rest 45–60 seconds
+- Cue: Rhythm first, then control.
+- Easier: Walk-through speed.
+- Harder: Faster approach rhythm.
+
+Organize:
+Power Circuit — Organize
+- Sets/reps: 3 rounds
+- Content:
+  - 2 approach jumps
+  - 2 block jumps
+  - 1 lateral shuffle to stick each direction
+  - Rest 60 seconds
+- Cue: Jump, land, and be ready for the next task.
+- Easier: Lower jumps.
+- Harder: Add coach direction call.
+
+Express:
+Power Circuit — Express
+- Sets/reps: 4 rounds
+- Content:
+  - 3 max approach jumps
+  - 3 block jumps
+  - 1 short sprint, 5–10 yards
+  - Rest 60–90 seconds
+- Cue: Max intent, clean landings, no junk reps.
+- Easier: Reduce to 2 jumps each.
+- Harder: Add target touch or timed sprint.
+
+
+RESET / MOBILITY
+These are track = all.
+
+1. 90/90 Breathing
+- Sets/reps: 1 x 60 seconds
+- Cue: Long exhale, ribs down.
+- Easier: Feet on floor.
+- Harder: Feet elevated.
+
+2. Deep Squat Breathing
+- Sets/reps: 1 x 45–60 seconds
+- Cue: Breathe into the position.
+- Easier: Hold onto support.
+- Harder: Add side-to-side rocks.
+
+3. Hip Flexor Stretch
+- Sets/reps: 1 x 30 seconds each side
+- Cue: Tall posture, quiet ribs.
+- Easier: Shorter stance.
+- Harder: Add reach.
+
+4. Calf Stretch
+- Sets/reps: 1 x 30 seconds each side
+- Cue: Keep the heel heavy.
+- Easier: Less angle.
+- Harder: Bend and straighten knee.
+
+
+============================================================
+8. READINESS LOGIC DETAIL
+============================================================
+
+Create a function recommendTrack(answers: ReadinessAnswers): TrackRecommendation
+
+Suggested scoring approach:
+
+Initialize score:
+buildScore = 0
+organizeScore = 0
+expressScore = 0
+
+Pain:
+if pain === "yes":
+  buildScore += 5
+
+Soreness:
+none: expressScore += 2
+mild: organizeScore += 2, expressScore += 1
+moderate: buildScore += 2, organizeScore += 2
+high: buildScore += 5
+
+Energy:
+low: buildScore += 3
+okay: organizeScore += 3
+high: expressScore += 3
+
+Sessions this week:
+0: expressScore += 1, organizeScore += 1
+1: organizeScore += 2
+2+: buildScore += 2, organizeScore += 2
+
+Trained yesterday:
+yes: buildScore += 2, organizeScore += 2
+no: expressScore += 1
+
+Decision:
+- If pain yes, always recommend Build.
+- Else choose highest score.
+- If tie, choose safer option in this order:
+  Build over Organize over Express when fatigue risk is present.
+  Organize over Express when uncertain.
+
+Return:
+- track
+- reason string
+
+Example reasons:
+Build:
+"Build is the better choice today because your body is asking for more control, lower impact, and better positions."
+
+Organize:
+"Organize is the better choice today because you are ready to move, but today is probably better for rhythm, balance, and clean coordination than max output."
+
+Express:
+"Express is the better choice today because you are fresh, pain-free, and ready for higher-intent jumping and speed work."
+
+
+============================================================
+9. DESIGN REQUIREMENTS
+============================================================
+
+Visual style:
+- Clean
+- Athletic
+- Modern
+- Simple
+- Mobile-first
+- Easy to read in a gym
+
+Recommended color direction:
+- Dark background option
+- Teal accent
+- Coral accent
+- White or light text
+- Track labels should be visually distinct
+
+Avoid:
+- Tiny text
+- Dense tables
+- Complicated navigation
+- Too many popups
+- Requiring typing
+- Hidden menus for core actions
+
+Components:
+- App shell
+- Button
+- Card
+- TrackBadge
+- SectionHeader
+- ExerciseCard
+- VideoModal
+- ReadinessOptionGroup
+- ProgressIndicator
+- SafetyRuleCard
+
+Accessibility:
+- Large tap targets
+- High contrast
+- Keyboard navigable where possible
+- Alt text for thumbnails
+- Avoid relying only on color to identify tracks
+
+
+============================================================
+10. PWA REQUIREMENTS
+============================================================
+
+The app should:
+- Have a web app manifest
+- Have an app name: Jump Ready
+- Have a short name: Jump Ready
+- Be installable on iOS/Android home screens
+- Cache core app shell
+- Work if internet drops after initial load, except videos may require internet
+- Include simple icons/placeholders
+- Include theme color and background color
+
+Manifest:
+- name: "Jump Ready"
+- short_name: "Jump Ready"
+- display: "standalone"
+- start_url: "/"
+- theme_color: use dark/teal/coral direction
+- background_color: dark or white depending design choice
+
+
+============================================================
+11. FILE / FOLDER STRUCTURE
+============================================================
+
+Suggested structure:
+
+src/
+  app/
+    App.tsx
+    routes.tsx
+  components/
+    Button.tsx
+    Card.tsx
+    TrackBadge.tsx
+    SectionHeader.tsx
+    ExerciseCard.tsx
+    VideoModal.tsx
+    ReadinessCheck.tsx
+    SafetyRuleCard.tsx
+  data/
+    exercises.ts
+    movementFamilies.ts
+    sessionSections.ts
+  logic/
+    readinessLogic.ts
+    sessionBuilder.ts
+  pages/
+    LandingPage.tsx
+    ReadinessPage.tsx
+    TrackConfirmPage.tsx
+    SessionOverviewPage.tsx
+    SessionPage.tsx
+    ExerciseLibraryPage.tsx
+    SafetyRulesPage.tsx
+    AboutPage.tsx
+  styles/
+    index.css
+  types/
+    index.ts
+
+public/
+  icons/
+  videos/
+  thumbnails/
+
+
+============================================================
+12. SESSION BUILDER LOGIC
+============================================================
+
+Create a function buildSession(track: Track)
+
+It should:
+1. Pull warm-up exercises where track = all and section = warm-up.
+2. Pull one exercise per movement family for the selected track.
+3. Pull the selected power circuit for the selected track.
+4. Pull reset exercises where track = all and section = reset.
+5. Return an ordered session array grouped by section.
+
+Order:
+1. Warm-Up / Movement Prep
+2. Knee / Quad / Split Squat
+3. Calf / Achilles / Ankle
+4. Hamstring / Hip / Posterior Chain
+5. Trunk / Brace / Rotate
+6. Landing / Deceleration
+7. Lateral Movement
+8. Ground-Based Movement
+9. Shoulder / Scap / Upper Body
+10. Power Circuit
+11. Reset / Mobility
+
+Important:
+- Do not randomly assign exercises in MVP.
+- Keep the program predictable and easy to teach.
+- Randomization can be added later.
+
+
+============================================================
+13. MVP TODO LIST
+============================================================
+
+PHASE 1 — PROJECT SETUP
+[ ] Create new Vite React TypeScript project.
+[ ] Add Tailwind CSS.
+[ ] Add basic routing.
+[ ] Add PWA plugin/config.
+[ ] Create app manifest.
+[ ] Create placeholder icons.
+[ ] Set up basic folder structure.
+[ ] Create global layout and navigation.
+[ ] Confirm app runs locally in VS Code.
+
+
+PHASE 2 — TYPES + DATA
+[ ] Create Track type.
+[ ] Create Exercise type.
+[ ] Create MovementFamily type.
+[ ] Create SessionSection type.
+[ ] Create ReadinessAnswers type.
+[ ] Create TrackRecommendation type.
+[ ] Build movementFamilies.ts.
+[ ] Build sessionSections.ts.
+[ ] Build exercises.ts using starter content above.
+[ ] Add placeholder videoUrl fields to every exercise.
+
+
+PHASE 3 — READINESS CHECK
+[ ] Build ReadinessPage.
+[ ] Add soreness question.
+[ ] Add pain question.
+[ ] Add energy question.
+[ ] Add sessions-this-week question.
+[ ] Add trained-yesterday question.
+[ ] Store answers in local component state or simple app state.
+[ ] Build recommendTrack() function.
+[ ] Show suggested track and reason.
+[ ] Allow athlete to accept suggestion.
+[ ] Allow athlete to override with Build, Organize, or Express.
+[ ] Route athlete to TrackConfirmPage or SessionOverviewPage.
+
+
+PHASE 4 — SESSION GENERATION
+[ ] Build buildSession(track) function.
+[ ] Confirm Build track returns Build exercise variations.
+[ ] Confirm Organize track returns Organize exercise variations.
+[ ] Confirm Express track returns Express exercise variations.
+[ ] Include warm-up and reset exercises for all tracks.
+[ ] Create SessionOverviewPage.
+[ ] Create SessionPage.
+[ ] Render session sections in correct order.
+[ ] Render ExerciseCards.
+[ ] Add Mark Complete functionality in local state.
+[ ] Add simple progress indicator.
+
+
+PHASE 5 — EXERCISE CARDS + VIDEO
+[ ] Build ExerciseCard component.
+[ ] Show exercise name.
+[ ] Show movement family.
+[ ] Show selected track.
+[ ] Show sets/reps.
+[ ] Show rest.
+[ ] Show cue.
+[ ] Show easier option.
+[ ] Show harder option.
+[ ] Show safety note if present.
+[ ] Add Watch Demo button.
+[ ] Build VideoModal component.
+[ ] If videoUrl exists, embed video.
+[ ] If videoUrl missing, show "Demo coming soon."
+[ ] Make modal easy to close on phone.
+
+
+PHASE 6 — EXERCISE LIBRARY
+[ ] Build ExerciseLibraryPage.
+[ ] List all movement families.
+[ ] Show exercises grouped by family.
+[ ] Add filter by track: All, Build, Organize, Express.
+[ ] Add filter by section or family if simple.
+[ ] Reuse ExerciseCard or create compact LibraryExerciseCard.
+[ ] Add Watch Demo access from library.
+
+
+PHASE 7 — SAFETY + ABOUT PAGES
+[ ] Build SafetyRulesPage.
+[ ] Add Pain Rule.
+[ ] Add Landing Rule.
+[ ] Add Soreness Rule.
+[ ] Add Effort Rule.
+[ ] Add core message: "Your job is not to survive the workout. Your job is to choose the right challenge."
+[ ] Build AboutPage.
+[ ] Explain Build the Frame / Organize the System / Express the Power.
+
+
+PHASE 8 — DESIGN POLISH
+[ ] Make all pages mobile-first.
+[ ] Improve button sizes and spacing.
+[ ] Add track badges.
+[ ] Add section headers.
+[ ] Add sticky selected-track indicator on SessionPage.
+[ ] Add simple empty states.
+[ ] Add readable typography.
+[ ] Test on iPhone screen size.
+[ ] Test on Android screen size if possible.
+[ ] Make sure text is readable in gym lighting.
+
+
+PHASE 9 — PWA TESTING
+[ ] Build production app.
+[ ] Confirm manifest is valid.
+[ ] Confirm app can be added to home screen.
+[ ] Confirm offline app shell works after first load.
+[ ] Confirm routes work after refresh.
+[ ] Confirm videos behave properly.
+[ ] Confirm app loads quickly on mobile data.
+[ ] Generate QR code to deployed URL.
+[ ] Test QR code in gym.
+
+
+PHASE 10 — DEPLOYMENT
+[ ] Deploy to Vercel or Netlify.
+[ ] Confirm live URL works.
+[ ] Confirm PWA install prompt/home screen behavior.
+[ ] Create QR code for live URL.
+[ ] Print QR code for gym use.
+[ ] Test with 3–5 athletes.
+[ ] Watch where they get confused.
+[ ] Fix only the confusing parts first.
+
+
+============================================================
+14. FUTURE FEATURES — NOT MVP
+============================================================
+
+After MVP works, consider:
+
+1. Athlete session history
+2. Anonymous completion count
+3. Coach dashboard
+4. Admin exercise editor
+5. Video upload system
+6. Team-specific program versions
+7. Readiness trend tracking
+8. Attendance tracking
+9. Workout calendar
+10. QR codes for specific training days
+11. Offline video caching
+12. Timer integration
+13. Audio cues
+14. Simple testing module:
+    - approach jump
+    - broad jump
+    - pogo rhythm
+    - balance reach
+15. Exportable coach reports
+
+
+============================================================
+15. PROJECT PRINCIPLES
+============================================================
+
+Keep these principles visible during development:
+
+1. Athletes should not need an explanation from a coach to use the app.
+2. The app should reduce confusion, not add more instructions.
+3. Choice is part of the design.
+4. The readiness check guides the athlete, but does not control them.
+5. The app should help athletes notice, adapt, and commit.
+6. Videos should be short and practical.
+7. Every screen should answer: "What do I do next?"
+8. Do not build complexity before the simple gym tool works.
+9. Make the MVP boringly useful.
+10. The first real test is whether athletes actually use it in the gym.
+
+
+============================================================
+16. FIRST DEVELOPMENT TASK FOR ZENCODER
+============================================================
+
+Start by creating the frontend-only PWA skeleton:
+
+- Vite + React + TypeScript
+- Tailwind CSS
+- Basic routing
+- PWA manifest
+- Landing Page
+- Readiness Page
+- Session Page placeholder
+- Exercise Library placeholder
+- Safety Rules placeholder
+
+Then create:
+- types/index.ts
+- data/exercises.ts
+- logic/readinessLogic.ts
+- logic/sessionBuilder.ts
+
+Do not add backend, authentication, database, or analytics yet.
+
+The first working demo should allow this flow:
+
+Landing Page
+  → Start Today's Session
+  → Complete readiness check
+  → See suggested track
+  → Choose/confirm track
+  → View session cards with placeholder exercises and demo buttons
+
+============================================================
+16.1a ADDITIONAL PROGRAM GUARDRAILS + COACHING FEATURES
+============================================================
+
+These additions should improve the quality, safety, and coaching usefulness of the Jump Ready MVP without turning it into a complex app.
+
+The goal is still simple:
+
+QR code → readiness check → suggested track → session cards → exercise videos.
+
+These additions should support that flow, not complicate it.
+
+
+============================================================
+16.1 FIRST SESSION ONBOARDING SCREEN
+============================================================
+
+Add a short onboarding screen that appears before the first session or can be accessed from the landing page.
+
+Purpose:
+- Help athletes understand how to use the app.
+- Prevent athletes from always choosing Express because it sounds more exciting.
+- Reinforce that choosing the right track is part of being a good athlete.
+
+Suggested title:
+"Choose the Right Challenge"
+
+Suggested text:
+"Jump Ready gives you three ways to train: Build, Organize, and Express. Your job is not to choose the hardest option every day. Your job is to choose the option that fits your body, your readiness, and your ability to move well today."
+
+Key message:
+"Pick the track that fits your body today, not your ego."
+
+Add three short explanations:
+
+Build:
+"Choose Build when you are sore, stiff, newer, lower-energy, or need more control."
+
+Organize:
+"Choose Organize when you feel okay but need rhythm, balance, coordination, and cleaner movement."
+
+Express:
+"Choose Express when you are fresh, pain-free, landing well, and ready for fast, powerful actions."
+
+Button:
+"I understand — start readiness check"
+
+
+============================================================
+16.2 COACH OVERRIDE NOTE
+============================================================
+
+The app supports athlete autonomy, but coaches still need to guide the training environment.
+
+Add this note to the Track Selection page, Safety Rules page, and possibly the Session page:
+
+"Coach Override: A coach may ask you to switch to Build or Organize if your landings, pain level, fatigue, or movement quality suggest Express is not the right choice today."
+
+Purpose:
+- Protect athletes from poor self-selection.
+- Give coaches permission to redirect without making it feel punitive.
+- Reinforce that adaptation is the goal.
+
+Suggested coach language:
+"That version is not wrong. It is just not the right challenge for today."
+"Move down a track so we can keep quality high."
+"Build today so you can express better later."
+
+
+============================================================
+16.3 JUMP VOLUME CAPS
+============================================================
+
+Add jump volume guidance to the Safety Rules page and to the Session Builder logic.
+
+Purpose:
+- Keep power work from turning into conditioning.
+- Reduce unnecessary tendon and joint stress.
+- Protect athletes who want to overdo Express work.
+
+Suggested jump caps per session:
+
+Build:
+- 0–10 total jumps
+- Emphasis: low impact, landing control, approach rhythm, isometrics
+
+Organize:
+- 10–25 total jumps
+- Emphasis: timing, coordination, landing variability, rhythm
+
+Express:
+- 25–45 total jumps max
+- Emphasis: high intent, full recovery, crisp execution
+
+Important:
+These numbers do not need to be displayed as strict math to the athlete every time, but the app should use them to guide session design.
+
+Add this rule clearly:
+"If jump height, landing quality, or intent drops, stop the jump set."
+
+Add this safety line:
+"Power work should end while athletes still look powerful."
+
+Optional app feature:
+- Show a small jump estimate on the Session Overview page.
+- Example:
+  "Estimated jumps today: 18–24"
+  "Track: Organize"
+
+
+============================================================
+16.4 WEEKLY PROGRESSION SETTING
+============================================================
+
+Add a simple week selector or program phase setting.
+
+Purpose:
+- Allow the same session structure to progress across the summer.
+- Keep the program from feeling random.
+- Keep development simple while still giving the training plan direction.
+
+Suggested phases:
+
+Weeks 1–2: Learn + Control
+Goal:
+- Learn the tracks.
+- Learn the movement families.
+- Learn how to self-select honestly.
+- Keep jump volume lower.
+- Emphasize Build and Organize.
+
+App behavior:
+- Lower volume.
+- More conservative Express recommendations.
+- More cues about landing quality and control.
+
+Weeks 3–5: Build + Coordinate
+Goal:
+- Increase strength, range, rhythm, and adaptable movement.
+- Add more reach, direction changes, partner constraints, and moderate jump volume.
+
+App behavior:
+- Slightly higher volume.
+- More Organize options.
+- More partner/reactive constraints.
+- Express available when readiness is high.
+
+Weeks 6–7: Express + Refine
+Goal:
+- Increase speed and power while keeping movement quality high.
+- More approach jumps, block jumps, bounds, and sprint starts.
+- Still allow Build and Organize for sore athletes.
+
+App behavior:
+- Express track can include higher intent work.
+- Maintain jump volume caps.
+- More emphasis on full rest and crisp execution.
+
+Week 8: Test + Celebrate
+Goal:
+- Calibrate progress.
+- Let athletes see what adapted.
+- Keep testing useful, not stressful.
+
+Possible tests:
+- Approach jump
+- Broad jump
+- Repeated approach jumps: best and average of 5
+- Pogo rhythm
+- Single-leg balance reach
+- Split squat control/range
+
+App behavior:
+- Add optional testing cards.
+- Avoid framing testing as a ranking system.
+- Include this message:
+  "Testing tells us what adapted. It does not define who you are."
+
+
+============================================================
+16.5 FIELD CONSTRAINTS FOR EACH EXERCISE
+============================================================
+
+Add practical setup fields to the Exercise data model.
+
+Purpose:
+- Help athletes and coaches quickly know whether an exercise fits the space and situation.
+- Reduce confusion in the gym.
+- Make the app more useful when space, surfaces, or equipment vary.
+
+Add these fields to Exercise type:
+
+- spaceNeeded: "small" | "medium" | "large"
+- partnerNeeded: boolean
+- equipmentNeeded: string[]
+- surface: "gym" | "turf" | "grass" | "any"
+- noiseLevel: "low" | "medium" | "high"
+- bestFor: string[]
+- avoidIf: string[]
+
+Example:
+
+Exercise:
+Split Squat Iso Hold
+
+spaceNeeded:
+"small"
+
+partnerNeeded:
+false
+
+equipmentNeeded:
+[]
+
+surface:
+"any"
+
+noiseLevel:
+"low"
+
+bestFor:
+["soreness", "strength", "knee control", "range of motion"]
+
+avoidIf:
+["sharp knee pain", "unable to hold position without pain"]
+
+
+Example:
+
+Exercise:
+Partner Mirror Shuffle
+
+spaceNeeded:
+"medium"
+
+partnerNeeded:
+true
+
+equipmentNeeded:
+[]
+
+surface:
+"gym"
+
+noiseLevel:
+"medium"
+
+bestFor:
+["coordination", "lateral movement", "reaction", "defense movement"]
+
+avoidIf:
+["ankle pain", "unsafe floor space", "crowded gym"]
+
+
+Example:
+
+Exercise:
+Approach Jumps
+
+spaceNeeded:
+"large"
+
+partnerNeeded:
+false
+
+equipmentNeeded:
+["optional target"]
+
+surface:
+"gym"
+
+noiseLevel:
+"high"
+
+bestFor:
+["jump power", "approach rhythm", "force expression"]
+
+avoidIf:
+["knee pain", "Achilles pain", "poor landing quality", "high soreness"]
+
+
+============================================================
+16.6 TODAY'S COACHING FOCUS CARD
+============================================================
+
+Add a "Today's Coaching Focus" card at the top of the Session page.
+
+Purpose:
+- Give each session a simple intention.
+- Keep athletes focused on perception, action, and adaptation.
+- Reinforce the coaching philosophy without overexplaining it.
+
+This card should appear after track selection and before the first exercise card.
+
+Examples:
+
+"Land quiet."
+
+"Move smoothly before moving fast."
+
+"Choose the version you can do with quality."
+
+"Stop chasing tired reps."
+
+"Find a position you can jump again from."
+
+"Push the floor away."
+
+"Be springy, not sloppy."
+
+"Control first. Speed second."
+
+"Notice what your body is telling you, then adapt."
+
+"Train the version of you that showed up today."
+
+Implementation:
+- Store focus statements in a local data file.
+- Select one based on phase, track, or simple rotation.
+- Keep it short and highly visible.
+
+Optional data model:
+
+TYPE: CoachingFocus
+Fields:
+- id: string
+- text: string
+- track?: Track | "all"
+- phase?: string
+- tags?: string[]
+
+
+============================================================
+16.7 UPDATED MVP BOUNDARY
+============================================================
+
+These additions are allowed inside the MVP:
+
+Allowed:
+- First-session onboarding screen
+- Coach override note
+- Jump volume caps
+- Week/phase selector
+- Field constraint data fields
+- Today's Coaching Focus card
+
+Still NOT part of MVP:
+- Login
+- Athlete accounts
+- Coach dashboard
+- Attendance tracking
+- Saved training history
+- Parent access
+- Payment features
+- Complex admin panel
+- Automated analytics
+
+The MVP should remain simple.
+
+The first real test is still this:
+
+Can an athlete scan a QR code, answer five readiness questions, choose the right track, watch the demo, and complete the session without needing a coach to explain every step?
+
+End of brief.
