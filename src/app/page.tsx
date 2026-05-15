@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Button } from '@/components/Button';
 import { StartButton } from '@/components/StartButton';
 import { PhaseSelector } from '@/components/PhaseSelector';
 import { Library, Shield, Info, HelpCircle } from 'lucide-react';

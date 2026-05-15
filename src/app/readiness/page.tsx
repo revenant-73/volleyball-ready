@@ -97,7 +97,7 @@ export default function ReadinessPage() {
 
   if (showResult) {
     const { track, reason } = calculateSuggestedTrack();
-    const trackColors = {
+    const trackColors: Record<string, string> = {
       build: 'border-blue-500 text-blue-700 bg-blue-50',
       organize: 'border-green-500 text-green-700 bg-green-50',
       express: 'border-orange-500 text-orange-700 bg-orange-50',

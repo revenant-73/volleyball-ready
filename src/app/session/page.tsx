@@ -36,7 +36,7 @@ function SessionContent() {
     );
   };
 
-  const trackColors = {
+  const trackColors: Record<string, string> = {
     build: 'bg-blue-600',
     organize: 'bg-green-600',
     express: 'bg-orange-600',
