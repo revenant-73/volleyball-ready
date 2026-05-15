@@ -8,10 +8,10 @@ export default function LandingPage() {
   return (
     <main className="flex-1 flex flex-col items-center justify-center p-6 max-w-md mx-auto">
       <div className="text-center mb-12">
-        <h1 className="text-5xl font-black tracking-tighter text-orange-600 mb-2">
-          JUMP READY
+        <h1 className="text-5xl font-black tracking-tighter text-orange-600 mb-2 leading-[0.9]">
+          VOLLEYBALL<br/>READY
         </h1>
-        <p className="text-zinc-600 font-medium text-sm">
+        <p className="text-zinc-600 font-medium text-sm mt-4">
           Volleyball strength and movement for athletes who jump, land, sprint, and adapt.
         </p>
       </div>

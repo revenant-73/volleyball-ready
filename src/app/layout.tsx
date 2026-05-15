@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jump Ready | Volleyball Strength & Movement",
+  title: "Volleyball Ready | Strength & Movement",
   description: "Simple no-login gym tool for volleyball athletes to build frame, organize system, and express power.",
   manifest: "/manifest.json",
   appleWebApp: {
