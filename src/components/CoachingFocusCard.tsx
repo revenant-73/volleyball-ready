@@ -10,10 +10,10 @@ interface CoachingFocusCardProps {
 
 export const CoachingFocusCard: React.FC<CoachingFocusCardProps> = ({ focus }) => {
   return (
-    <div className="bg-orange-50 border-2 border-orange-100 rounded-2xl p-6 shadow-sm">
+    <div className="bg-primary/5 border-2 border-primary/10 rounded-2xl p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-2">
-        <Lightbulb className="w-5 h-5 text-orange-600" />
-        <span className="text-[10px] font-black uppercase tracking-widest text-orange-600">
+        <Lightbulb className="w-5 h-5 text-primary" />
+        <span className="text-[10px] font-black uppercase tracking-widest text-primary">
           Today's Coaching Focus
         </span>
       </div>

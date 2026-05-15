@@ -100,7 +100,7 @@ export default function ReadinessPage() {
     const trackColors: Record<string, string> = {
       build: 'border-blue-500 text-blue-700 bg-blue-50',
       organize: 'border-green-500 text-green-700 bg-green-50',
-      express: 'border-orange-500 text-orange-700 bg-orange-50',
+      express: 'border-primary text-primary bg-primary/5',
     };
 
     return (
@@ -167,7 +167,7 @@ export default function ReadinessPage() {
         </div>
         <div className="w-full h-2 bg-zinc-100 rounded-full overflow-hidden">
           <div 
-            className="h-full bg-orange-500 transition-all duration-300" 
+            className="h-full bg-primary transition-all duration-300" 
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -183,7 +183,7 @@ export default function ReadinessPage() {
             <button
               key={option}
               onClick={() => handleAnswer(option)}
-              className="w-full p-6 text-left text-xl font-bold border-2 border-zinc-100 rounded-2xl hover:border-orange-500 hover:bg-orange-50 transition-all active:scale-95 capitalize"
+              className="w-full p-6 text-left text-xl font-bold border-2 border-zinc-100 rounded-2xl hover:border-primary hover:bg-primary/5 transition-all active:scale-95 capitalize"
             >
               {option}
             </button>

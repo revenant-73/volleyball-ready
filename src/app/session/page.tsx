@@ -39,7 +39,7 @@ function SessionContent() {
   const trackColors: Record<string, string> = {
     build: 'bg-blue-600',
     organize: 'bg-green-600',
-    express: 'bg-orange-600',
+    express: 'bg-primary',
   };
 
   return (
@@ -289,7 +289,7 @@ export default function SessionPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     }>
       <SessionContent />

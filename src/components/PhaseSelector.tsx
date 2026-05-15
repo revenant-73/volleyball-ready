@@ -32,7 +32,7 @@ export const PhaseSelector: React.FC = () => {
       <select 
         value={currentPhaseId}
         onChange={handleChange}
-        className="w-full bg-white border-2 border-zinc-200 rounded-xl px-4 py-3 font-bold text-zinc-900 focus:border-orange-500 focus:ring-0 outline-none mb-2"
+        className="w-full bg-white border-2 border-zinc-200 rounded-xl px-4 py-3 font-bold text-zinc-900 focus:border-primary focus:ring-0 outline-none mb-2"
       >
         {programPhases.map(phase => (
           <option key={phase.id} value={phase.id}>

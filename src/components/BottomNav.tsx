@@ -27,10 +27,10 @@ export const BottomNav = () => {
               key={item.href} 
               href={item.href}
               className={`flex flex-col items-center justify-center w-full h-full transition-colors ${
-                isActive ? 'text-orange-600' : 'text-zinc-400 hover:text-zinc-600'
+                isActive ? 'text-primary' : 'text-zinc-400 hover:text-zinc-600'
               }`}
             >
-              <Icon className={`w-6 h-6 ${isActive ? 'fill-orange-50/50' : ''}`} />
+              <Icon className={`w-6 h-6 ${isActive ? 'fill-primary/10' : ''}`} />
               <span className="text-[10px] font-bold mt-1 uppercase tracking-tighter">
                 {item.label}
               </span>
