@@ -17,10 +17,14 @@ export const metadata: Metadata = {
   title: "Volleyball Ready | Strength & Movement",
   description: "Simple no-login gym tool for volleyball athletes to build frame, organize system, and express power.",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Jump Ready",
+    title: "Volleyball Ready",
   },
   formatDetection: {
     telephone: false,
